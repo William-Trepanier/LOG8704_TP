@@ -255,6 +255,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e836beea506bea0e5a195d31566d11be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SimpleAnimation
+  objectToRotate: {fileID: 0}
   clickDuration: 0.25
   durationInSeconds: 1
 --- !u!1 &2317233515023633908
@@ -322,6 +323,7 @@ GameObject:
   - component: {fileID: 6039300071078109978}
   - component: {fileID: 2183264984513196492}
   - component: {fileID: 3471538223933167219}
+  - component: {fileID: 4621558488654825130}
   m_Layer: 0
   m_Name: Visuals
   m_TagString: Untagged
@@ -401,6 +403,18 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4621558488654825130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3435864238947048048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fea32853f3b53ec4fa42d3b99fa03d4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ColorChanger
 --- !u!1 &5098610303329052743
 GameObject:
   m_ObjectHideFlags: 0
@@ -501,7 +515,8 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2996392715678626154}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 4896237787779704601, guid: eb9104ef66b7305468adb3697fdeed5e, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb9104ef66b7305468adb3697fdeed5e, type: 3}

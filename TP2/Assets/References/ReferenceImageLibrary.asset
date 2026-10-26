@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 848409ee8ba454f42a5ddff137688a27, type: 3}
+  m_Name: ReferenceImageLibrary
+  m_EditorClassIdentifier: Unity.XR.ARSubsystems::UnityEngine.XR.ARSubsystems.XRReferenceImageLibrary
+  m_GuidLow: 5089795346178480462
+  m_GuidHigh: 3087477001335377551
+  m_DataStore:
+    m_Storage: []
+  m_Images:
+  - m_SerializedGuid:
+      m_GuidLow: 4799458635848372790
+      m_GuidHigh: 2720014013807601581
+    m_SerializedTextureGuid:
+      m_GuidLow: 16917682212555927405
+      m_GuidHigh: 2671724041421030041
+    m_Size: {x: 0.0889, y: 0.08638488}
+    m_SpecifySize: 1
+    m_Name: Screenshot_20261022_150032
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 5305349175673548420
+      m_GuidHigh: 546337093754110636
+    m_SerializedTextureGuid:
+      m_GuidLow: 8827591360031330929
+      m_GuidHigh: 8689502296163175737
+    m_Size: {x: 0.0889, y: 0.08865202}
+    m_SpecifySize: 1
+    m_Name: Screenshot_20261022_150050
+    m_Texture: {fileID: 0}

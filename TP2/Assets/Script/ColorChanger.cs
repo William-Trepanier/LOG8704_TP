@@ -26,7 +26,11 @@ public class ColorChanger : MonoBehaviour
     private void Update()
     {
         if (!_camera) return;
-        var angle = Vector3.SignedAngle(Vector3.up, _camera.up, _camera.forward);
+        
+        var projectionUp = Vector3.ProjectOnPlane(Vector3.up, _camera.forward);
+        if (projectionUp.sqrMagnitude < 1e-6f) return; // La caméra regarde directement vers le haut ou le bas
+        
+        var angle = Vector3.SignedAngle(projectionUp.normalized, _camera.up, _camera.forward);
         var hue = Mathf.Repeat(angle, 360f) / 360f;
         _meshRenderer.material.SetColor(BaseColor, Color.HSVToRGB(hue, 1f, 1f));
     }

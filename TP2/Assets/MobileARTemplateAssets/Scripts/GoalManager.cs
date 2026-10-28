@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
+using UnityEngine.XR.ARFoundation;
+using UnityEngine.XR.ARSubsystems;
 using UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets;
 
 namespace UnityEngine.XR.Templates.AR
@@ -59,6 +61,10 @@ namespace UnityEngine.XR.Templates.AR
             TapSurface,
 
             /// <summary>
+            /// Find and track an AR image
+            /// </summary>
+            FindImage,
+            /// <summary>
             /// Show movement hints
             /// </summary>
             Hints,
@@ -110,6 +116,10 @@ namespace UnityEngine.XR.Templates.AR
         [Tooltip("Object Spawner used to detect whether the spawning goal has been achieved.")]
         [SerializeField]
         ObjectSpawner m_ObjectSpawner;
+
+        [Tooltip("Tracked image manager used to detect when an image target is found.")]
+        [SerializeField]
+        ARTrackedImageManager m_TrackedImageManager;
 
         /// <summary>
         /// Object Spawner used to detect whether the spawning goal has been achieved.
@@ -183,7 +193,7 @@ namespace UnityEngine.XR.Templates.AR
 
         void Update()
         {
-            if (Pointer.current != null && Pointer.current.press.wasPressedThisFrame && !m_AllGoalsFinished && (m_CurrentGoal.CurrentGoal == OnboardingGoals.FindSurfaces || m_CurrentGoal.CurrentGoal == OnboardingGoals.Hints || m_CurrentGoal.CurrentGoal == OnboardingGoals.Scale))
+            if (Pointer.current != null && Pointer.current.press.wasPressedThisFrame && !m_AllGoalsFinished && (m_CurrentGoal.CurrentGoal == OnboardingGoals.FindSurfaces || m_CurrentGoal.CurrentGoal == OnboardingGoals.FindImage || m_CurrentGoal.CurrentGoal == OnboardingGoals.Hints || m_CurrentGoal.CurrentGoal == OnboardingGoals.Scale))
             {
                 if (m_CurrentCoroutine != null)
                 {
@@ -218,7 +228,24 @@ namespace UnityEngine.XR.Templates.AR
 
         void PreprocessGoal()
         {
-            if (m_CurrentGoal.CurrentGoal == OnboardingGoals.FindSurfaces)
+            if (m_CurrentGoal.CurrentGoal == OnboardingGoals.FindImage)
+            {
+                if (m_TrackedImageManager == null)
+                {
+                    Debug.LogError("AR Tracked Image Manager is not assigned.", this);
+                    return;
+                }
+
+                foreach (var trackedImage in m_TrackedImageManager.trackables)
+                {
+                    if (trackedImage.trackingState == TrackingState.Tracking)
+                    {
+                        CompleteGoal();
+                        return;
+                    }
+                }
+            }
+            else if (m_CurrentGoal.CurrentGoal == OnboardingGoals.FindSurfaces)
             {
                 m_CurrentCoroutine = StartCoroutine(WaitUntilNextCard(5f));
             }
@@ -234,6 +261,42 @@ namespace UnityEngine.XR.Templates.AR
             {
                 m_SurfacesTapped = 0;
                 m_ObjectSpawner.objectSpawned += OnObjectSpawned;
+            }
+        }
+
+        void OnEnable()
+        {
+            if (m_TrackedImageManager != null)
+                m_TrackedImageManager.trackablesChanged.AddListener(OnTrackedImagesChanged);
+        }
+
+        void OnDisable()
+        {
+            if (m_TrackedImageManager != null)
+                m_TrackedImageManager.trackablesChanged.RemoveListener(OnTrackedImagesChanged);
+        }
+
+        void OnTrackedImagesChanged(ARTrackablesChangedEventArgs<ARTrackedImage> eventArgs)
+        {
+            if (m_AllGoalsFinished || m_CurrentGoal.CurrentGoal != OnboardingGoals.FindImage)
+                return;
+
+            foreach (var trackedImage in eventArgs.added)
+            {
+                if (trackedImage.trackingState == TrackingState.Tracking)
+                {
+                    CompleteGoal();
+                    return;
+                }
+            }
+
+            foreach (var trackedImage in eventArgs.updated)
+            {
+                if (trackedImage.trackingState == TrackingState.Tracking)
+                {
+                    CompleteGoal();
+                    return;
+                }
             }
         }
 
@@ -292,6 +355,7 @@ namespace UnityEngine.XR.Templates.AR
             int startingStep = m_AllGoalsFinished ? 1 : 0;
 
             var tapSurfaceGoal = new Goal(OnboardingGoals.TapSurface);
+            var findImageGoal = new Goal(OnboardingGoals.FindImage);
             var touchObjectGoal = new Goal(OnboardingGoals.Hints);
             var deviceOrientationGoal = new Goal(OnboardingGoals.Hints);
             var translateHintsGoal = new Goal(OnboardingGoals.Hints);
@@ -299,6 +363,7 @@ namespace UnityEngine.XR.Templates.AR
             var rotateHintsGoal = new Goal(OnboardingGoals.Hints);
 
             m_OnboardingGoals.Enqueue(tapSurfaceGoal);
+            m_OnboardingGoals.Enqueue(findImageGoal);
             m_OnboardingGoals.Enqueue(touchObjectGoal);
             m_OnboardingGoals.Enqueue(deviceOrientationGoal);
             m_OnboardingGoals.Enqueue(translateHintsGoal);

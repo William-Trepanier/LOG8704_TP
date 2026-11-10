@@ -1150,6 +1150,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5376501628273953719, guid: ded92bffdbffb794aa3304b5cf0497df, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1231979254}
+    - targetCorrespondingSourceObject: {fileID: 5376501628273953719, guid: ded92bffdbffb794aa3304b5cf0497df, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1231979255}
   m_SourcePrefab: {fileID: 100100000, guid: ded92bffdbffb794aa3304b5cf0497df, type: 3}
 --- !u!1 &1231979253 stripped
 GameObject:
@@ -1179,6 +1182,19 @@ MonoBehaviour:
   skyMaterial: {fileID: 2100000, guid: 2d056ac30ecc9e542b26e06133f23602, type: 2}
   rapidity: 0
   velocityDirection: {x: 0, y: 0, z: 1}
+--- !u!114 &1231979255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1231979253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00d953d867d79a4daa9f5e9bd7a6d777, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Ship
+  increment: 0.01
 --- !u!1 &1243187546
 GameObject:
   m_ObjectHideFlags: 0

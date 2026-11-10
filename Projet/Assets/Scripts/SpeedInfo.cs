@@ -20,7 +20,7 @@ public struct SpeedInfo
         {
             <= Constants.MaxRapidityM => (SpeedScale.Meters, Constants.LightSpeed * Math.Tanh(rapidity)),
             <= Constants.MaxRapidityKm => (SpeedScale.Kilometers, Constants.LightSpeed * Math.Tanh(rapidity) / 1000.0),
-            <= Constants.MaxRapidityBeta => (SpeedScale.Beta, Math.Tanh(rapidity)),
+            <= Constants.MaxRapidityBeta => (SpeedScale.Beta, Math.Tanh(rapidity) * 100),
             _ => (SpeedScale.OneMinusBeta, Constants.LightSpeed * (Math.Exp(-rapidity) / Math.Cosh(rapidity)))
         };
             
@@ -28,7 +28,7 @@ public struct SpeedInfo
         {
             <= Constants.MaxRapidityM => $"{value:F0} m/s",
             <= Constants.MaxRapidityKm => $"{value:F0} km/s",
-            <= Constants.MaxRapidityBeta => $"{value:F2} %",
+            <= Constants.MaxRapidityBeta => $"{value:F8} %",
             _ => $"{value:G3} m/s until light speed"
         };
     }

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class Ship : MonoBehaviour
+public class SpaceShip : MonoBehaviour
 {
     private RelativisticSky _relativisticSky;
     public double increment = 0.1f;
@@ -17,7 +17,6 @@ public class Ship : MonoBehaviour
             _relativisticSky.rapidity = value switch
             {
                 < 0 => 0,
-                > 12 => 12,
                 _ => (float)value
             };
         }
@@ -26,9 +25,9 @@ public class Ship : MonoBehaviour
     public SpeedInfo SpeedInfo => new SpeedInfo(Rapidity);
     public DistanceInfo DistanceInfo => new DistanceInfo(Distance);
     
-    public String ShipTimeLabel => $"{ShipTime}";
+    public String ShipTimeLabel => $"{GetLabelFromSeconds(ShipTime)}";
     
-    public String EarthTimeLabel => $"{EarthTime}";
+    public String EarthTimeLabel => $"{GetLabelFromSeconds(EarthTime)}";
     
     public double ShipTime { get; private set; }
     public double EarthTime { get; private set; }
@@ -64,6 +63,6 @@ public class Ship : MonoBehaviour
     private string GetLabelFromSeconds(double seconds)
     {
         var dateTimeOffset = DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(seconds));
-        return dateTimeOffset.ToString("yyyy-MM-dd HH:mm:ss");
+        return dateTimeOffset.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss");
     }
 }

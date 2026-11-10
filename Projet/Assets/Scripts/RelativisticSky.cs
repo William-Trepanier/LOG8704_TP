@@ -21,7 +21,7 @@ public class RelativisticSky : MonoBehaviour
     private MaterialPropertyBlock _materialPropertyBlock;
 
     public Material skyMaterial;
-    [Range(0f, 12f)] public float rapidity;
+    [Range(0f, 18f)] public float rapidity;
     private static readonly int RapidityId = Shader.PropertyToID("_Rapidity");
     public Vector3 velocityDirection = Vector3.forward;
     private static readonly int VelId = Shader.PropertyToID("_Velocity");

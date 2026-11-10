@@ -26,11 +26,11 @@ public struct DistanceInfo
 
         label = distance switch
         {
-            <= 10e3 => $"{value:F1} km",
-            <= 10e7 => $"{value:F1} ls",
-            <= 10e11 => $"{value:F1} au",
-            <= 10e15 => $"{value:F1} ly",
-            _ => $"{value:F1} pc"
+            <= 10e7 => $"{value:F4} km",
+            <= 10e11 => $"{value:F4} ls",
+            <= 10e15 => $"{value:F4} au",
+            <= 10e18 => $"{value:F4} ly",
+            _ => $"{value:F4} pc"
         };
     }
 }

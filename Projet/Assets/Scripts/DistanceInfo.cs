@@ -1,5 +1,8 @@
+using Unity.Burst.CompilerServices;
+
 public enum DistanceScale
 {
+    Meters,
     Kilometers,
     LightSeconds,
     AstronomicalUnits,
@@ -17,19 +20,21 @@ public struct DistanceInfo
     {
         (scale, value) = distance switch
         {
-            <= 10e3 => (DistanceScale.Kilometers, distance),
-            <= 10e7 => (DistanceScale.LightSeconds, distance / 299792458.0),
-            <= 10e11 => (DistanceScale.AstronomicalUnits, distance / 149597870700.0),
-            <= 10e15 => (DistanceScale.LightYears, distance / 9460730472580800.0),
-            _ => (DistanceScale.Parsec, distance / 30856775814913673.0)
+            <= Constants.MaxDistanceM => (DistanceScale.Meters, distance),
+            <= Constants.MaxDistanceKm => (DistanceScale.Kilometers, distance / Constants.KilometersToMeters),
+            <= Constants.MaxDistanceLightSeconds => (DistanceScale.LightSeconds, distance / Constants.LightSecondsToMeters),
+            <= Constants.MaxDistanceAstronomicalUnits => (DistanceScale.AstronomicalUnits, distance / Constants.AstronomicalUnitsToMeters),
+            <= Constants.MaxDistanceLightYears => (DistanceScale.LightYears, distance / Constants.LightYearsToMeters),
+            _ => (DistanceScale.Parsec, distance / Constants.ParsecToMeters)
         };
 
         label = distance switch
         {
-            <= 10e7 => $"{value:F4} km",
-            <= 10e11 => $"{value:F4} ls",
-            <= 10e15 => $"{value:F4} au",
-            <= 10e18 => $"{value:F4} ly",
+            <= Constants.MaxDistanceM => $"{value:F4} m",
+            <= Constants.MaxDistanceKm => $"{value:F4} km",
+            <= Constants.MaxDistanceLightSeconds => $"{value:F4} ls",
+            <= Constants.MaxDistanceAstronomicalUnits => $"{value:F4} au",
+            <= Constants.MaxDistanceLightYears => $"{value:F4} ly",
             _ => $"{value:F4} pc"
         };
     }

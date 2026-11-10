@@ -3,11 +3,10 @@ using UnityEngine;
 
 public class SpaceShip : MonoBehaviour
 {
-    private RelativisticSky _relativisticSky;
-    public double increment = 0.1f;
+    [Header("Thrust")] 
+    public float minStep = 1e-6f;
+    public float maxStep = 0.5f;
     
-    public double Beta => Math.Tanh(Rapidity);
-
     public double Rapidity
     {
         get => _relativisticSky.rapidity;
@@ -22,8 +21,10 @@ public class SpaceShip : MonoBehaviour
         }
     }
     
-    public SpeedInfo SpeedInfo => new SpeedInfo(Rapidity);
-    public DistanceInfo DistanceInfo => new DistanceInfo(Distance);
+    public double Beta => Math.Tanh(Rapidity);
+    
+    public SpeedInfo SpeedInfo => new(Rapidity);
+    public DistanceInfo DistanceInfo => new(Distance);
     
     public String ShipTimeLabel => $"{GetLabelFromSeconds(ShipTime)}";
     
@@ -32,6 +33,8 @@ public class SpaceShip : MonoBehaviour
     public double ShipTime { get; private set; }
     public double EarthTime { get; private set; }
     public double Distance { get; private set; }
+    
+    private RelativisticSky _relativisticSky;
 
     private void Awake()
     {
@@ -50,14 +53,16 @@ public class SpaceShip : MonoBehaviour
         Distance += Constants.LightSpeed * Math.Sinh(Rapidity) * Time.deltaTime;
     }
     
-    public void IncrementRapidity()
+    private double GetRapidityStep(double rapidity) => Math.Clamp(rapidity, minStep, maxStep);
+    
+    public void IncrementRapidity(bool inUpdate)
     {
-        Rapidity += increment;
+        Rapidity += GetRapidityStep(Rapidity) * (inUpdate ? Time.deltaTime : 1);
     }
     
-    public void DecrementRapidity()
+    public void DecrementRapidity(bool inUpdate)
     {
-        Rapidity -= increment;
+        Rapidity = Math.Max(0f, Rapidity - GetRapidityStep(Rapidity) * (inUpdate ? Time.deltaTime : 1));
     }
 
     private string GetLabelFromSeconds(double seconds)

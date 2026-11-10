@@ -6,7 +6,8 @@ using UnityEngine;
 [ExecuteAlways]
 public class RelativisticSky : MonoBehaviour
 {
-    [Header("Whiteout flash")] public Renderer flashQuad;
+    [Header("Flash Overlay")] 
+    public Renderer flashQuad;
     public float maxFlash = 0.8f;
     public float whiteTemperature = 6500f;
     public float cmbTemperature = 300f;
@@ -20,7 +21,10 @@ public class RelativisticSky : MonoBehaviour
     private static readonly int FlashDirId = Shader.PropertyToID("_FlashDir");
     private MaterialPropertyBlock _materialPropertyBlock;
 
+    [Header("Sky")]
     public Material skyMaterial;
+    
+    [Header("Velocity")]
     [Range(0f, 18f)] public float rapidity;
     private static readonly int RapidityId = Shader.PropertyToID("_Rapidity");
     public Vector3 velocityDirection = Vector3.forward;

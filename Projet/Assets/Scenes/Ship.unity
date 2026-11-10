@@ -1434,7 +1434,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00d953d867d79a4daa9f5e9bd7a6d777, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Ship
-  increment: 0.01
+  minStep: 0.00000001
+  maxStep: 0.1
 --- !u!4 &1231979256 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8405268230012332890, guid: ded92bffdbffb794aa3304b5cf0497df, type: 3}

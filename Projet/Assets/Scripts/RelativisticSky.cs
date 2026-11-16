@@ -30,6 +30,9 @@ public class RelativisticSky : MonoBehaviour
     public Vector3 velocityDirection = Vector3.forward;
     private static readonly int VelId = Shader.PropertyToID("_Velocity");
 
+    /// <summary>
+    /// Met à jour le matériel du skybox et l'affichage du flash d'éblouissement
+    /// </summary>
     private void Update()
     {
         if (!skyMaterial) return;
@@ -41,6 +44,10 @@ public class RelativisticSky : MonoBehaviour
         UpdateFlash(normalizedVelocityDir);
     }
 
+    /// <summary>
+    /// Met à jour l'affichage du flash d'éblouissement
+    /// </summary>
+    /// <param name="normalizedVelocityDir"></param>
     private void UpdateFlash(Vector3 normalizedVelocityDir)
     {
         if (!flashQuad) return;
@@ -59,15 +66,24 @@ public class RelativisticSky : MonoBehaviour
         flashQuad.SetPropertyBlock(_materialPropertyBlock);
         flashQuad.enabled = intensity > 0.001f;
     }
-
-    // Même fonction que le shader RelativisticSkybox
+    
+    /// <summary>
+    /// Même fonction que le shader RelativisticSkybox
+    /// </summary>
+    /// <param name="lambda">La longueur d'onde de la couleur primaire</param>
+    /// <param name="T">La température de l'objet</param>
+    /// <returns></returns>
     private float PlanckRelative(float lambda, float T)
     {
         var x = 14388f / (lambda * T);
         return x > 80f ? 0f : 1f / (Mathf.Exp(x) - 1f); // Si x > 80, le résultat est pratiquement 0
     }
 
-    // Même fonction que le shader RelativisticSkybox
+    /// <summary>
+    /// Même fonction que le shader RelativisticSkybox
+    /// </summary>
+    /// <param name="T"></param>
+    /// <returns></returns>
     private Color BlackbodyColor(float T)
     {
         const float r = 0.62f, g = 0.54f, b = 0.46f; // Longueur d'onde des couleurs primaires

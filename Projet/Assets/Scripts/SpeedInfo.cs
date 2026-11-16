@@ -1,5 +1,8 @@
 using System;
 
+/// <summary>
+/// Différentes échelles de vitesse
+/// </summary>
 public enum SpeedScale
 {
     Meters,
@@ -8,6 +11,9 @@ public enum SpeedScale
     OneMinusBeta
 }
 
+/// <summary>
+/// Vitesse de la navette spatiale selon une échelle spécifique
+/// </summary>
 public struct SpeedInfo
 {
     public readonly double value;

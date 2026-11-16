@@ -1,5 +1,8 @@
 using Unity.Burst.CompilerServices;
 
+/// <summary>
+/// Différentes échelles de distance
+/// </summary>
 public enum DistanceScale
 {
     Meters,
@@ -10,6 +13,9 @@ public enum DistanceScale
     Parsec
 }
 
+/// <summary>
+/// Distance que la navette spatiale a parcouru dans une échelle spécifique
+/// </summary>
 public struct DistanceInfo
 {
     public readonly double value;

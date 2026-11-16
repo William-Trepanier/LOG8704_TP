@@ -32,6 +32,7 @@ TagManager:
   - QDSUIToggleCheckboxRadio
   - QDSUIToggleThumbnail
   - SpaceShip
+  - SkyboxCamera
   layers:
   - Default
   - TransparentFX

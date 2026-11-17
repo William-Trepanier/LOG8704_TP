@@ -1359,7 +1359,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.081072, y: 0.242}
+  m_AnchoredPosition: {x: 0.081072, y: 0.305}
   m_SizeDelta: {x: 63.3, y: 24.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &155722479
@@ -1382,8 +1382,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Acceleration : 0000 m/s\xB2\nSpeed : 0000 m/s\nDistance : 0000 ls\nShip
-    Time : yyyy-MM-dd HH:mm:ss\nEarth Time : yyyy-MM-dd HH:mm:ss"
+  m_text: "Acceleration : 0000 m/s\xB2\nSpeed : 0000 m/s\nOdometer : 0000 ls\nDistance
+    Remaining : 0000 ls\nTravel Progression  : 000.00%\nArrival in : 0000-00-000
+    HH:mm:ss\nShip Time : yyyy-MM-dd HH:mm:ss\nEarth Time : yyyy-MM-dd HH:mm:ss"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1449,7 +1450,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: -10.188717, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   _SortingLayer: 0
@@ -2478,7 +2479,6 @@ MonoBehaviour:
   maxAngle: 45
   minValue: -1
   maxValue: 1
-  observedAngle: 0
   onRotationChanged:
     m_PersistentCalls:
       m_Calls:
@@ -2494,6 +2494,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  observedAngle: 0
 --- !u!1 &1086297277
 GameObject:
   m_ObjectHideFlags: 0
@@ -2733,8 +2734,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00d953d867d79a4daa9f5e9bd7a6d777, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Ship
+  throttle: 0
+  growthFactor: 0.5
   minStep: 0.00000001
-  maxStep: 0.1
+  maxStep: 0.15
+  destinationDistance: 134009350
 --- !u!4 &1231979256 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8405268230012332890, guid: ded92bffdbffb794aa3304b5cf0497df, type: 3}

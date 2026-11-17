@@ -1,4 +1,5 @@
 using Unity.Burst.CompilerServices;
+using Unity.VisualScripting;
 
 /// <summary>
 /// Différentes échelles de distance
@@ -18,29 +19,63 @@ public enum DistanceScale
 /// </summary>
 public struct DistanceInfo
 {
-    public readonly double value;
-    public readonly DistanceScale scale;
     public readonly string label;
+    
+    private readonly double _distance;
+    private readonly DistanceScale _scale;
 
-    public DistanceInfo(double distance)
+    public DistanceInfo(double distanceInMeters)
     {
-        (scale, value) = distance switch
+        (_scale, _distance) = distanceInMeters switch
         {
-            <= Constants.MaxDistanceM => (DistanceScale.Meters, distance),
-            <= Constants.MaxDistanceKm => (DistanceScale.Kilometers, distance / Constants.KilometersToMeters),
-            <= Constants.MaxDistanceLightSeconds => (DistanceScale.LightSeconds, distance / Constants.LightSecondsToMeters),
-            <= Constants.MaxDistanceAstronomicalUnits => (DistanceScale.AstronomicalUnits, distance / Constants.AstronomicalUnitsToMeters),
-            <= Constants.MaxDistanceLightYears => (DistanceScale.LightYears, distance / Constants.LightYearsToMeters),
-            _ => (DistanceScale.Parsec, distance / Constants.ParsecToMeters)
+            <= Constants.MaxDistanceM => (DistanceScale.Meters, distanceInMeters),
+            <= Constants.MaxDistanceKm => (DistanceScale.Kilometers, distanceInMeters / Constants.KilometersToMeters),
+            <= Constants.MaxDistanceLightSeconds => (DistanceScale.LightSeconds, distanceInMeters / Constants.LightSecondsToMeters),
+            <= Constants.MaxDistanceAstronomicalUnits => (DistanceScale.AstronomicalUnits, distanceInMeters / Constants.AstronomicalUnitsToMeters),
+            <= Constants.MaxDistanceLightYears => (DistanceScale.LightYears, distanceInMeters / Constants.LightYearsToMeters),
+            _ => (DistanceScale.Parsec, distanceInMeters / Constants.ParsecToMeters)
         };
+        
+        label = GetLabel(_distance, _scale);
+    }
+    
+    public DistanceInfo(double distance, DistanceScale scale) 
+        : this(Convert(distance, scale, DistanceScale.Meters))
+    {
+    }
 
-        label = distance switch
+    public double Get(DistanceScale scale)
+    {
+        return scale == _scale ? _distance : Convert(_distance, _scale, scale);
+    }
+    
+    public static double Convert(double distance, DistanceScale fromScale, DistanceScale toScale)
+    {
+        return distance * GetMetersPerUnit(fromScale) / GetMetersPerUnit(toScale);
+    }
+
+    private static double GetMetersPerUnit(DistanceScale unitScale)
+    {
+        return unitScale switch
         {
-            <= Constants.MaxDistanceM => $"{value:F4} m",
-            <= Constants.MaxDistanceKm => $"{value:F4} km",
-            <= Constants.MaxDistanceLightSeconds => $"{value:F4} ls",
-            <= Constants.MaxDistanceAstronomicalUnits => $"{value:F4} au",
-            <= Constants.MaxDistanceLightYears => $"{value:F4} ly",
+            DistanceScale.Meters => 1.0,
+            DistanceScale.Kilometers => Constants.KilometersToMeters,
+            DistanceScale.LightSeconds => Constants.LightSecondsToMeters,
+            DistanceScale.AstronomicalUnits => Constants.AstronomicalUnitsToMeters,
+            DistanceScale.LightYears => Constants.LightYearsToMeters,
+            _ => Constants.ParsecToMeters
+        };
+    }
+
+    private static string GetLabel(double value, DistanceScale scale)
+    {
+        return scale switch
+        {
+            DistanceScale.Meters => $"{value:F4} m",
+            DistanceScale.Kilometers => $"{value:F4} km",
+            DistanceScale.LightSeconds => $"{value:F4} ls",
+            DistanceScale.AstronomicalUnits => $"{value:F4} au",
+            DistanceScale.LightYears => $"{value:F4} ly",
             _ => $"{value:F4} pc"
         };
     }

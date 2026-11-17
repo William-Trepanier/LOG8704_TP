@@ -18,11 +18,14 @@ public class DebugInfo : MonoBehaviour
     private void Update()
     {
         if (!SpaceShip) return;
-        string label = $"Acceleration : {SpaceShip.AccelerationInfo.label}\n";
+        var label = $"Acceleration : {SpaceShip.AccelerationInfo.label}\n";
         label += $"Speed : {SpaceShip.SpeedInfo.label}\n";
-        label += $"Distance : {SpaceShip.DistanceInfo.label}\n";
-        label += $"Ship Time : {SpaceShip.ShipTimeLabel}\n";
-        label += $"Earth Time : {SpaceShip.EarthTimeLabel}";
+        label += $"Odometer : {SpaceShip.DistanceInfo.label}\n";
+        label += $"Distance Remaining : {SpaceShip.DestinationInfo.distance.label}\n";
+        label += $"Distance Progression : {SpaceShip.DestinationInfo.distanceProgression * 100:F2}%\n";
+        label += $"Arrival in : {SpaceShip.DestinationInfo.timeRemaining.label}\n";
+        label += $"Ship Time : {SpaceShip.ShipTimeInfo.label}\n";
+        label += $"Earth Time : {SpaceShip.EarthTimeInfo.label}";
         _textMeshPro.text = label;
     }
 }

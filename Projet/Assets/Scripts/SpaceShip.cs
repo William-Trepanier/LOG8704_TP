@@ -11,20 +11,9 @@ public class SpaceShip : MonoBehaviour
     public float growthFactor = 0.5f;
     public float minStep = 1e-6f;
     public float maxStep = 0.1f;
-    
-    public double Rapidity
-    {
-        get => _relativisticSky.rapidity;
 
-        set
-        {
-            _relativisticSky.rapidity = value switch
-            {
-                < 0 => 0,
-                _ => (float)value
-            };
-        }
-    }
+    [Header("Destination")] 
+    [Tooltip("Distance in light seconds")] public float destinationDistance = 134009348.4f;
 
     public float Throttle
     {
@@ -37,25 +26,65 @@ public class SpaceShip : MonoBehaviour
                 > 1 => 1,
                 _ => value
             };
-            Acceleration = GetRapidityStep(Rapidity) * throttle * Constants.LightSpeed;
+            _acceleration = GetRapidityStep(Rapidity) * throttle * Constants.LightSpeed;
         }
     }
     
-    public double Beta => Math.Tanh(Rapidity);
+    private double Rapidity
+    {
+        get => _relativisticSky.rapidity;
+
+        set
+        {
+            _relativisticSky.rapidity = value switch
+            {
+                < 0 => 0,
+                _ => (float)value
+            };
+        }
+    }
     
-    public AccelerationInfo AccelerationInfo => new(Acceleration);
+    private double _acceleration;
+    public AccelerationInfo AccelerationInfo => new(_acceleration);
     
     public SpeedInfo SpeedInfo => new(Rapidity);
-    public DistanceInfo DistanceInfo => new(Distance);
+
+    private double _distance;
+    public DistanceInfo DistanceInfo => new(_distance);
+
+    private double _shipTime;
+    public TimeInfo ShipTimeInfo => new(_shipTime);
+
+    private double _earthTime;
+    public TimeInfo EarthTimeInfo => new(_earthTime);
     
-    public String ShipTimeLabel => $"{GetLabelFromSeconds(ShipTime)}";
-    
-    public String EarthTimeLabel => $"{GetLabelFromSeconds(EarthTime)}";
-    
-    public double ShipTime { get; private set; }
-    public double EarthTime { get; private set; }
-    public double Distance { get; private set; }
-    public double Acceleration { get; private set; }
+    public DestinationInfo DestinationInfo {
+        get
+        {
+            var destinationDistanceM = DistanceInfo.Convert(destinationDistance, DistanceScale.LightSeconds, 
+                DistanceScale.Meters);
+
+            var deltaX = destinationDistanceM - _distance;
+            var remainingDistance = new DistanceInfo(deltaX);
+            var progression = _distance / destinationDistanceM;
+            
+            var speed = SpeedInfo.Get(SpeedScale.Meters);
+
+            TimeInfo remainingTime;
+            if (Mathf.Approximately((float)speed, 0) && Mathf.Approximately((float)_acceleration, 0))
+            {
+                remainingTime = new TimeInfo();
+            }
+            else
+            {
+                var squareRoot = Math.Sqrt(speed * speed + 2 * _acceleration * deltaX);
+                var travelTime = Math.Max((-speed - squareRoot) / _acceleration, (-speed + squareRoot) / _acceleration);
+                remainingTime = new TimeInfo(_earthTime, travelTime);
+            }
+            
+            return new DestinationInfo(remainingDistance, remainingTime, (float)progression);
+        }
+    }
     
     private RelativisticSky _relativisticSky;
 
@@ -66,15 +95,15 @@ public class SpaceShip : MonoBehaviour
 
     private void Start()
     {
-        ShipTime = EarthTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        _shipTime = _earthTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
     }
 
     private void Update()
     {
         ApplyThrottle();
-        ShipTime += Time.deltaTime;
-        EarthTime += Math.Cosh(Rapidity) * Time.deltaTime;
-        Distance += Constants.LightSpeed * Math.Sinh(Rapidity) * Time.deltaTime;
+        _shipTime += Time.deltaTime;
+        _earthTime += Math.Cosh(Rapidity) * Time.deltaTime;
+        _distance += Constants.LightSpeed * Math.Sinh(Rapidity) * Time.deltaTime;
     }
     
     private void ApplyThrottle()

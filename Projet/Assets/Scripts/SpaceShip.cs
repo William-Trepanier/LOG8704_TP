@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// Controller de la navette spatiale
@@ -14,6 +15,12 @@ public class SpaceShip : MonoBehaviour
 
     [Header("Destination")] 
     [Tooltip("Distance in light seconds")] public float destinationDistance = 134009348.4f;
+
+    [Tooltip("Distance in light seconds")] public float distanceFromSun = 5.9f;
+
+    [Header("Events")] 
+    public UnityEvent<DistanceInfo> updateDistanceFromSun;
+    public UnityEvent<DistanceInfo> updateDistanceFromDestination;
 
     public float Throttle
     {
@@ -90,11 +97,14 @@ public class SpaceShip : MonoBehaviour
     private void Awake()
     {
         _relativisticSky = GetComponent<RelativisticSky>();
+        _shipTime = _earthTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        _distance = DistanceInfo.Convert(distanceFromSun, DistanceScale.LightSeconds, DistanceScale.Meters);
     }
 
     private void Start()
     {
-        _shipTime = _earthTime = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        updateDistanceFromSun.Invoke(DistanceInfo);
+        updateDistanceFromDestination.Invoke(DestinationInfo.distance);
     }
 
     private void Update()
@@ -103,6 +113,8 @@ public class SpaceShip : MonoBehaviour
         _shipTime += Time.deltaTime;
         _earthTime += Math.Cosh(Rapidity) * Time.deltaTime;
         _distance += Constants.LightSpeed * Math.Sinh(Rapidity) * Time.deltaTime;
+        updateDistanceFromSun.Invoke(DistanceInfo);
+        updateDistanceFromDestination.Invoke(DestinationInfo.distance);
     }
     
     private void ApplyThrottle()

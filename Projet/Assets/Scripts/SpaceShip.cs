@@ -26,7 +26,6 @@ public class SpaceShip : MonoBehaviour
                 > 1 => 1,
                 _ => value
             };
-            _acceleration = GetRapidityStep(Rapidity) * throttle * Constants.LightSpeed;
         }
     }
     
@@ -108,6 +107,7 @@ public class SpaceShip : MonoBehaviour
     
     private void ApplyThrottle()
     {
+        _acceleration = GetRapidityStep(Rapidity) * throttle * Constants.LightSpeed;
         if (Mathf.Approximately(throttle, 0f)) return;
         Rapidity += GetRapidityStep(Rapidity) * Throttle * Time.deltaTime;
     }

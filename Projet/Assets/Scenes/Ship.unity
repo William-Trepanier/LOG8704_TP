@@ -2604,8 +2604,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a55f92339eaae9d4cbd899d20fae3b10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RotationEffector
-  minAngle: -45
-  maxAngle: 45
+  minAngle: 275
+  maxAngle: 25
   minValue: -1
   maxValue: 1
   onRotationChanged:
@@ -2995,8 +2995,8 @@ MonoBehaviour:
   throttle: 0
   growthFactor: 0.5
   minStep: 0.00000001
-  maxStep: 0.15
-  destinationDistance: 134009350
+  maxStep: 0.5
+  destinationDistance: 134009400
 --- !u!4 &1231979256 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8405268230012332890, guid: ded92bffdbffb794aa3304b5cf0497df, type: 3}
@@ -3635,6 +3635,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e957855a31dce741b9fff1d594b0ea2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  sound: {fileID: 2019467275}
+  minPitch: 0
+  maxPitch: 2
 --- !u!82 &2019467275
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3649,7 +3652,7 @@ AudioSource:
   m_Resource: {fileID: 8300000, guid: 2bf627c4d79182a4b99430dd9311c1ae, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
-  m_Pitch: -2.18
+  m_Pitch: 0
   Loop: 1
   Mute: 0
   Spatialize: 0

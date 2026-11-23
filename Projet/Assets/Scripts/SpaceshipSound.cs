@@ -1,17 +1,13 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class EngineSound : MonoBehaviour
 {
-    public AudioSource SpaceshipSound;
+    public AudioSource sound;
+    public float minPitch = 0;
+    public float maxPitch = 2;
+    
     private SpaceShip _spaceShip;
-
-    /// <summary>
-    /// Met à jour le pitch du son du vaisseau selon son pourcentage de la vitesse de la lumière
-    /// </summary>
-    public void UpdatePitch(float throttle)
-    {
-        SpaceshipSound.pitch = Mathf.Lerp(1f, 3f, Mathf.Abs(throttle));
-    }
 
     void Start()
     {
@@ -20,7 +16,14 @@ public class EngineSound : MonoBehaviour
 
     void Update()
     {
-
         UpdatePitch(_spaceShip.throttle);
+    }
+    
+    /// <summary>
+    /// Met à jour le pitch du son du vaisseau selon son pourcentage de la vitesse de la lumière
+    /// </summary>
+    private void UpdatePitch(float throttle)
+    {
+        sound.pitch = throttle * (maxPitch - minPitch) + minPitch;
     }
 }

@@ -4,18 +4,20 @@ using UnityEngine.Events;
 
 public class RotationEffector : MonoBehaviour
 {
-    public float minAngle = -45f;
-    public float maxAngle = 45f;
+    [Range(0, 360)] public float minAngle = 275f;
+    [Range(0, 360)] public float maxAngle = 25f;
     public float minValue = -1f;
     public float maxValue = 1f;
     public UnityEvent<float> onRotationChanged = new();
     [SerializeField] private int observedAngle;
 
     private float _lastAngle;
+    private float _effectiveMaxAngle;
 
     private void Start()
     {
         _lastAngle = GetAngle();
+        _effectiveMaxAngle = GetAngleOffset(maxAngle);
     }
 
     private void Update()
@@ -29,17 +31,24 @@ public class RotationEffector : MonoBehaviour
 
     private float GetAngle()
     {
-        return observedAngle switch
+        var angle = observedAngle switch
         {
             0 => transform.eulerAngles.x,
             1 => transform.eulerAngles.y,
             2 => transform.eulerAngles.z,
             _ => throw new ArgumentOutOfRangeException()
         };
+
+        return GetAngleOffset(angle);
     }
     
     private float GetValueFromAngle(float angle)
     {
-        return (angle - minAngle) / (maxAngle - minAngle) * (maxValue - minValue) + minValue;
+        return angle / _effectiveMaxAngle * (maxValue - minValue) + minValue;
+    }
+
+    private float GetAngleOffset(float angle)
+    {
+        return (angle - minAngle + 360) % 360;
     }
 }

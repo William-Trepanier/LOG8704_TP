@@ -33,6 +33,7 @@ TagManager:
   - QDSUIToggleThumbnail
   - SpaceShip
   - SkyboxCamera
+  - AudioAvancer
   layers:
   - Default
   - TransparentFX

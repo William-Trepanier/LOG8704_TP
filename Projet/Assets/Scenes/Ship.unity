@@ -2624,6 +2624,55 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 729155441}
   m_CullTransparentMesh: 1
+--- !u!1 &846869899
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 846869900}
+  - component: {fileID: 846869901}
+  m_Layer: 0
+  m_Name: CockpitHud_Panel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &846869900
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 846869899}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.025774244, y: -0.031487636, z: -0.0008197129, w: -0.99917144}
+  m_LocalPosition: {x: 0.323, y: 0.2946, z: 1.9201}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8405268231202040238}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &846869901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 846869899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c51b1ad25c7d844dbf6cc2ac19513e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CockpitHud
+  canvasSize: {x: 600, y: 400}
+  worldScale: 0.001
+  throttleStep: 0.25
+  warnBeta: 90
+  dangerBeta: 99
 --- !u!1 &861173789
 GameObject:
   m_ObjectHideFlags: 0
@@ -12598,6 +12647,7 @@ Transform:
   - {fileID: 5770422392775708517}
   - {fileID: 5770422391394913029}
   - {fileID: 683886762}
+  - {fileID: 846869900}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &8587826150704259876

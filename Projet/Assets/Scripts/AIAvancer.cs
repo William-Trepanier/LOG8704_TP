@@ -4,10 +4,12 @@ public class AIAvancer : MonoBehaviour
 {
     private AudioSource audioSource;
     float temps = 8f;
+    private GameObject throttle;
 
     void Start()
     {
-        audioSource = GameObject.FindGameObjectWithTag("AudioAvancer").GetComponent<AudioSource>(); ;
+        audioSource = GameObject.FindGameObjectWithTag("AudioAvancer").GetComponent<AudioSource>();
+        throttle = GameObject.FindGameObjectWithTag("Throttle");
     }
 
     void Update()

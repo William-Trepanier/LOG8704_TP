@@ -5859,7 +5859,7 @@ GameObject:
   - component: {fileID: 997026427}
   m_Layer: 0
   m_Name: CockpitEquipments_ThrottleControl1-Handle2
-  m_TagString: Untagged
+  m_TagString: Throttle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

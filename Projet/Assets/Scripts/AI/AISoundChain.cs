@@ -18,6 +18,13 @@ namespace AI
 
         private void Start()
         {
+
+            foreach (var element in elements)
+            {
+                element.audioSource.playOnAwake = false;
+                element.audioSource.loop = false;
+            }
+            
             if (playOnAwake)
                 Play();
         }

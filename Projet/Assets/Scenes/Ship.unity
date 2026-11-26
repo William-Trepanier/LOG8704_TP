@@ -2749,7 +2749,7 @@ GameObject:
   - component: {fileID: 451479017}
   - component: {fileID: 451479016}
   m_Layer: 0
-  m_Name: AI Acceuil
+  m_Name: AI Accueil
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2767,7 +2767,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 5223cb99de83a1e44988307caa348f7d, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.7
   m_Pitch: 1
   Loop: 0
@@ -2860,12 +2860,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 451479015}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.011, y: -0.22, z: 0.826}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.0011499999, y: -0.37157, z: 1.05339}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2060164296}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &453467452
 GameObject:
@@ -5641,7 +5641,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1735238702}
   - component: {fileID: 1735238701}
-  - component: {fileID: 1735238700}
   m_Layer: 0
   m_Name: AI Avancer
   m_TagString: AudioAvancer
@@ -5649,18 +5648,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1735238700
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1735238699}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08bfa6a3be9978345add644e50e589c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
 --- !u!82 &1735238701
 AudioSource:
   m_ObjectHideFlags: 0
@@ -5766,12 +5753,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1735238699}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.06271, y: -0.09462, z: 0.5}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.072560005, y: -0.24619001, z: 0.72739}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2060164296}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1743414400
 GameObject:
@@ -6502,6 +6489,59 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2035892398}
   m_CullTransparentMesh: 1
+--- !u!1 &2060164294
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2060164296}
+  - component: {fileID: 2060164295}
+  m_Layer: 0
+  m_Name: AISoundChain
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2060164295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2060164294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65d6f43a9cac40c98be42c33bcb42960, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AI.AISoundChain
+  playOnAwake: 1
+  loop: 0
+  elements:
+  - audioSource: {fileID: 451479016}
+    delayBefore: 0
+  - audioSource: {fileID: 1735238701}
+    delayBefore: 2
+--- !u!4 &2060164296
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2060164294}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.00985, y: 0.15157, z: -0.22739}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 451479017}
+  - {fileID: 1735238702}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2070928292
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14623,9 +14663,8 @@ SceneRoots:
   - {fileID: 1710388386}
   - {fileID: 1291178055}
   - {fileID: 1021894255}
-  - {fileID: 451479017}
   - {fileID: 2019467276}
   - {fileID: 250070219}
   - {fileID: 453467455}
-  - {fileID: 1735238702}
   - {fileID: 94677079}
+  - {fileID: 2060164296}

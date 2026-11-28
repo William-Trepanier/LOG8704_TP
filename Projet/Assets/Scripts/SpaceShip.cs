@@ -76,17 +76,8 @@ public class SpaceShip : MonoBehaviour
             
             var speed = SpeedInfo.Get(SpeedScale.Meters);
 
-            TimeInfo remainingTime;
-            if (Mathf.Approximately((float)speed, 0) && Mathf.Approximately((float)_acceleration, 0))
-            {
-                remainingTime = new TimeInfo();
-            }
-            else
-            {
-                var squareRoot = Math.Sqrt(speed * speed + 2 * _acceleration * deltaX);
-                var travelTime = Math.Max((-speed - squareRoot) / _acceleration, (-speed + squareRoot) / _acceleration);
-                remainingTime = new TimeInfo(_earthTime, travelTime);
-            }
+            var travelTime = GetTravelTime(speed, _acceleration, deltaX);
+            var remainingTime = new TimeInfo(_earthTime, travelTime);
             
             return new DestinationInfo(remainingDistance, remainingTime, (float)progression);
         }
@@ -115,6 +106,26 @@ public class SpaceShip : MonoBehaviour
         _distance += Constants.LightSpeed * Math.Sinh(Rapidity) * Time.deltaTime;
         updateDistanceFromSun.Invoke(DistanceInfo);
         updateDistanceFromDestination.Invoke(DestinationInfo.distance);
+    }
+    
+    private static double GetTravelTime(double speed, double acceleration, double deltaX)
+    {
+        if (deltaX <= 0) return 0;
+
+        // Vitesse constante
+        if (Math.Abs(acceleration) < 1e-9)
+            return deltaX / speed;
+
+        // Accélération
+        var discriminant = speed * speed + 2 * acceleration * deltaX;
+        
+        var squareRoot = Math.Sqrt(discriminant);
+        var t1 = (-speed - squareRoot) / acceleration;
+        var t2 = (-speed + squareRoot) / acceleration;
+        
+        var first = Math.Min(t1, t2);
+        var second = Math.Max(t1, t2);
+        return first >= 0 ? first : second;
     }
     
     private void ApplyThrottle()
